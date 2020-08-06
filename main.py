@@ -1,5 +1,6 @@
 # need selenium-wire
 from seleniumwire import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,13 +14,13 @@ LOGIN_INFO = {
 
 DEFINED_ID = {
     'sugang_jungbo_button': 'mainframe.childframe.form.div_leftFrame.form.grid_leftMenu.body.gridrow_3.cell_3_0.celltreeitem.treeitemtext',
-    'sugang_plan_button': 'mainframe.childframe.form.div_leftFrame.form.grid_leftMenu.body.gridrow_5.cell_5_0.celltreeitem.treeitemtext',
+    'sugang_plan_button': 'mainframe.childframe.form.div_leftFrame.form.grid_leftMenu.body.gridrow_6.cell_6_0.celltreeitem.treeitemtext',
     'department_dropdown': 'mainframe.childframe.form.divForm8381.form.div_arg1.form.cb_dept_cd',
     'department_dropdown_item': 'mainframe.childframe.form.divForm8381.form.div_arg1.form.cb_dept_cd.combopopup',
     'search_button': 'mainframe.childframe.form.divForm8381.form.MenuBtn1.form.menuBbtn_search1',
 }
-
-driver = webdriver.Chrome()
+chrome_driver_file = ChromeDriverManager().install()
+driver = webdriver.Chrome(chrome_driver_file)
 driver.implicitly_wait(3)
 url = 'https://kut90.koreatech.ac.kr/login/LoginPage.do'
 driver.get(url)

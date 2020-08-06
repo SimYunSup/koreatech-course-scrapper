@@ -5,6 +5,7 @@
 ## requirement
 
 - selenium-wire
+- webdriver_manager
 
 ## ROADMAP
 
@@ -12,6 +13,7 @@
 - [ ] 설정파일 분리
 - [ ] 데이터베이스에 삽입
 - [ ] 아우누리 포털 수강평가 데이터 받아오기
+- [ ] selenium-wire 의존성 없애기
 - [ ] C#으로 포팅
 
 
