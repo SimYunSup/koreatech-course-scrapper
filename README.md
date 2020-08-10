@@ -11,8 +11,7 @@
 
 - [x] 수강정보 xml 받아오기 
 - [x] 설정파일 분리
-- [ ] XML 파싱
-- [ ] 아우누리 포털 수강평가 데이터 받아오기
+- [x] XML 파싱
 - [ ] AWS lambda용 docker 파일 생성
 - [ ] selenium-wire 의존성 없애기
 

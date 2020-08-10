@@ -4,6 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from scrap_parser import course_parser
 import time
 import json
 
@@ -49,3 +50,4 @@ def scrap_course(logininfo, definedID):
 
 if __name__ == "__main__":
     data = scrap_course(LOGIN_INFO, DEFINED_ID)
+    json = course_parser(data)
