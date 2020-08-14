@@ -33,6 +33,7 @@ YR:             년도
 
 DEFINED_ID = {
     "YEAR": "YR",
+    "graduation_col": "GRAD_DIV_NM",  # 학부 필터링을 위함
     "prefessor_col": "PROF_NH",
     # 10: 1학기 11: 여름학기 20: 2학기 21: 겨울학기
     "semestor_col": "TERM_DIV",
@@ -60,7 +61,7 @@ def course_parser(xml_data):
     for row in rows:
         parsed_class_time = []
         class_time_element = row.find(f'.//{xml_namespace}Col[@id="{DEFINED_ID["class_time_col"]}"]')
-        class_time = class_time_element.text if class_time_element else ''
+        class_time = class_time_element.text if class_time_element is not None else ''
         for time in re.finditer(class_time_regex, class_time):
             find_result = time.groups()
             time_array = list(range(
@@ -69,13 +70,18 @@ def course_parser(xml_data):
             for index in range(len(time_array)):
                 time_array[index] = WEEK_NUMBER[find_result[0]] * 100 + time_array[index]
             parsed_class_time = parsed_class_time + time_array
+        graduation = row.find(f'.//*[@id="{DEFINED_ID["graduation_col"]}"]')
+        if graduation.text != "학부":
+            continue
+        department = row.find(f'.//*[@id="{DEFINED_ID["department_col"]}"]')
+        if department.text in ["강소기업경영학과", "기계설계공학과", "기전융합공학과"]:
+            continue
         name = row.find(f'.//*[@id="{DEFINED_ID["name_col"]}"]')
         code = row.find(f'.//*[@id="{DEFINED_ID["code_col"]}"]')
         grades = row.find(f'.//*[@id="{DEFINED_ID["grades_col"]}"]')
         class_number = row.find(f'.//*[@id="{DEFINED_ID["class_number_col"]}"]')
         professor = row.find(f'.//*[@id="{DEFINED_ID["professor_col"]}"]')
         regular_number = row.find(f'.//*[@id="{DEFINED_ID["regular_number_col"]}"]')
-        department = row.find(f'.//*[@id="{DEFINED_ID["department_col"]}"]')
         target = row.find(f'.//*[@id="{DEFINED_ID["target_col"]}"]')
         course = {
             "name": name.text,
@@ -83,7 +89,7 @@ def course_parser(xml_data):
             "grades": grades.text,
             "class_number": class_number.text,
             "professor": professor.text if professor else None,
-            "regular_number": regular_number.text,
+            "regular_number": regular_number.text if regular_number else None,
             "department": department.text,
             "target": target.text if target else '0',
             "class_time": parsed_class_time
