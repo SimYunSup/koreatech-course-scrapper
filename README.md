@@ -13,9 +13,8 @@
 - [x] 설정파일 분리
 - [x] XML 파싱
 - [x] 학기별 데이터 받아오게 변경
-- [ ] 에브리타임 수강평가 데이터 받아오기
-- [ ] AWS lambda용 docker 파일 생성
-- [ ] selenium-wire 의존성 없애기
+- [ ] AWS Lambda용 docker 파일 생성
+- [ ] AWS DynamoDB에 연결
 
 
 

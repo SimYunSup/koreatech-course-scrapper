@@ -58,7 +58,9 @@ def scrap_course(logininfo, definedID, year, semester):
 
 
 if __name__ == "__main__":
-    data = scrap_course(LOGIN_INFO, DEFINED_ID, 2019, '2학기')
+    data = scrap_course(LOGIN_INFO, DEFINED_ID, 2020, '2학기')
+    with open("test.xml", "w", encoding="UTF-8") as xml_file:
+        xml_file.write(data)
     json_data = course_parser(data)
     with open("test.json", "w", encoding="UTF-8") as json_file:
         json.dump(json_data, json_file, ensure_ascii=False)

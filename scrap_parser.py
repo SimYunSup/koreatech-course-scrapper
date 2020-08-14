@@ -57,18 +57,20 @@ def course_parser(xml_data):
     xml_root_regex = r"^{(.+)}Root"
     xml_namespace = '{' + re.findall(xml_root_regex, xml_tree.tag)[0] + '}'
     rows = xml_tree.iterfind(f'.//{xml_namespace}Row')
-    class_time_regex = r"([월화수목금토일])(\d{2}[AB])~(\d{2}[AB])"
+    class_time_regex = r"([월화수목금토일]?)(\d{2}[AB])~(\d{2}[AB])"
     for row in rows:
         parsed_class_time = []
         class_time_element = row.find(f'.//{xml_namespace}Col[@id="{DEFINED_ID["class_time_col"]}"]')
         class_time = class_time_element.text if class_time_element is not None else ''
+        before_day = None
         for time in re.finditer(class_time_regex, class_time):
             find_result = time.groups()
             time_array = list(range(
                 int(find_result[1][0:2]) * 2 + (0 if find_result[1][2] == 'A' else 1),
                 int(find_result[2][0:2]) * 2 + (0 if find_result[2][2] == 'A' else 1) + 1))
+            before_day = find_result[0] if find_result[0] != '' else before_day
             for index in range(len(time_array)):
-                time_array[index] = WEEK_NUMBER[find_result[0]] * 100 + time_array[index]
+                time_array[index] = WEEK_NUMBER[before_day] * 100 + time_array[index]
             parsed_class_time = parsed_class_time + time_array
         graduation = row.find(f'.//*[@id="{DEFINED_ID["graduation_col"]}"]')
         if graduation.text != "학부":
@@ -88,12 +90,11 @@ def course_parser(xml_data):
             "code": code.text,
             "grades": grades.text,
             "class_number": class_number.text,
-            "professor": professor.text if professor else None,
-            "regular_number": regular_number.text if regular_number else None,
+            "professor": professor.text if professor is not None else None,
+            "regular_number": regular_number.text if regular_number is not None else None,
             "department": department.text,
             "target": target.text if target else '0',
             "class_time": parsed_class_time
         }
-        print(course)
         course_array.append(course)
     return course_array
