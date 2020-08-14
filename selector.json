@@ -3,5 +3,7 @@
     "sugang_plan_button": "mainframe.childframe.form.div_leftFrame.form.grid_leftMenu.body.gridrow_6.cell_6_0.celltreeitem.treeitemtext",
     "department_dropdown": "mainframe.childframe.form.divForm8381.form.div_arg1.form.cb_dept_cd",
     "department_dropdown_item": "mainframe.childframe.form.divForm8381.form.div_arg1.form.cb_dept_cd.combopopup",
-    "search_button": "mainframe.childframe.form.divForm8381.form.MenuBtn1.form.menuBbtn_search1"
+    "search_button": "mainframe.childframe.form.divForm8381.form.MenuBtn1.form.menuBbtn_search1",
+    "year_dropdown": "mainframe.childframe.form.divForm8381.form.div_arg1.form.cb_yr",
+    "semester_dropdown": "mainframe.childframe.form.divForm8381.form.div_arg1.form.cb_term_div"
 }

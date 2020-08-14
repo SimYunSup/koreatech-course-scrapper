@@ -15,7 +15,7 @@ with open("secrets.json") as secret:
     LOGIN_INFO = json.load(secret)
 
 
-def scrap_course(logininfo, definedID):
+def scrap_course(logininfo, definedID, year, semester):
     chrome_driver_file = ChromeDriverManager().install()
     driver = webdriver.Chrome(chrome_driver_file)
     driver.implicitly_wait(3)
@@ -37,6 +37,15 @@ def scrap_course(logininfo, definedID):
     department_dropdown.click()
     department_dropdown_item = driver.find_element_by_id(definedID['department_dropdown_item'])
     department_dropdown_item.click()
+    year_dropdown = driver.find_element_by_id(definedID['year_dropdown'])
+    year_dropdown.click()
+    year_dropdown_item = driver.find_elements_by_xpath(f"//div[contains(text(), {year})]")[0]
+    year_dropdown_item.click()
+    semester_dropdown = driver.find_element_by_id(definedID['semester_dropdown'])
+    semester_dropdown.click()
+    semester_dropdown_item = driver.find_elements_by_xpath(f"//div[contains(text(), '{semester}')]")[0]
+    semester_dropdown_item.click()
+
     del driver.requests
     search_button = driver.find_element_by_id(definedID['search_button'])
     search_button.click()
@@ -49,5 +58,5 @@ def scrap_course(logininfo, definedID):
 
 
 if __name__ == "__main__":
-    data = scrap_course(LOGIN_INFO, DEFINED_ID)
-    json = course_parser(data)
+    data = scrap_course(LOGIN_INFO, DEFINED_ID, 2019, '2학기')
+    json_data = course_parser(data)
